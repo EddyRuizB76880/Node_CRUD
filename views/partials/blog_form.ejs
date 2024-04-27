@@ -1,0 +1,42 @@
+
+
+<form method="POST" action="/<%= action %>">
+    <div class="form-field">
+        <label for="titleField" >Title</label>
+        <input id="titleField" 
+                placeholder="Title here" 
+                name="titleField" 
+                type="text" 
+                required
+                <%if(action === 'view'){%> disabled <%}%> 
+                value="<%if(locals.post){%><%= post.title.trim()%><%}%>"
+    />
+    </div>
+
+    <div class="form-field">
+        <label for="postField" >Post content</label>
+        <textarea id="postField" 
+                placeholder="Write your post here."
+                name="postField" 
+                class="form-control-lg"
+                rows="1"
+                required
+                <%if(action === 'view'){%> disabled <%}%> 
+                ><%if(locals.post){%><%=post.content.trim()%><%}%></textarea>
+    </div>
+    
+    <div class="form-field">
+        <label for="imgUrlField" >Post's image</label>
+        <input id="imgUrlField" 
+                placeholder="(Optional) The URL to an image  that represents your post's topic" 
+                name="imgUrlField" 
+                type="text" 
+                <%if(action === 'view'){%> disabled <%}%> 
+                value="<%if(locals.post){%><%= post.imgUrl.trim()%><%}%>"
+    />
+    </div>
+
+    <% if (action !== 'view'){ %>
+        <button class='btn btn-primary' id='formButton' type="submit">Save post</button>
+    <% } %>
+</form>
