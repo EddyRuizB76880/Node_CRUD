@@ -15,22 +15,31 @@ const app = express();
 
 const blogPosts = new Map();
 const date = new Date();
+const MAIN_PAGE = 'main_page.ejs';
+
+const ALERT_BOX_DELETION_TEXT = {
+    header:'WARNING',
+    title:'Deleting Post!',
+    description: 'Deleting a post is permanent. You will not recover it in any way ',
+    confirmationText: 'Delete Anyway',
+    confirmStyle: 'btn-danger'
+}
 
 app.use(express.static('public/'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res)=>{
-    res.render('main_page.ejs', {existingBlogs: blogPosts});
+    res.render(MAIN_PAGE, {existingBlogs: blogPosts, alert: ALERT_BOX_DELETION_TEXT});
 } )
 
 app.get('/create', (req, res)=>{
-    res.render('blog.ejs', {siteTitle: 'Create a new Post', content: 'Holis', action: 'create'});
+    res.render('blog.ejs', {siteTitle: 'Create a new Post', action: 'create'});
 })
 
 app.post('/create', (req, res)=>{
     console.log(req.body);
     savePost(blogPosts.size, req.body);
-    res.render('main_page.ejs', {existingBlogs: blogPosts, overlayText: 'New post created!'})
+    res.render(MAIN_PAGE, {existingBlogs: blogPosts, alert: ALERT_BOX_DELETION_TEXT, overlayText: 'New post created!'})
 } )
 
 app.get('/edit/:id', (req, res)=>{
@@ -38,13 +47,13 @@ app.get('/edit/:id', (req, res)=>{
         res.render('blog.ejs', {siteTitle: 'Edit your post', content: 'Holis', action: `edit/${req.params.id}`, post: blogPosts.get(req.params.id)});
     } else {
         // show 404 
-        res.render('main_page.ejs', {existingBlogs: blogPosts, overlayText: 'Post not found...'})
+        res.render(MAIN_PAGE, {existingBlogs: blogPosts, alert: ALERT_BOX_DELETION_TEXT ,overlayText: 'Post not found...'})
     }
 } )
 
 app.post('/edit/:id', (req, res)=>{
     savePost(req.params.id, req.body);
-    res.render('main_page.ejs', {existingBlogs: blogPosts, overlayText: 'Post Updated!'}) 
+    res.render(MAIN_PAGE, {existingBlogs: blogPosts, alert: ALERT_BOX_DELETION_TEXT, overlayText: 'Post Updated!'}) 
 })
 
 app.get('/view/:id', (req, res)=>{
@@ -52,7 +61,7 @@ app.get('/view/:id', (req, res)=>{
           res.render('blog.ejs', {siteTitle: 'Read your post', content: 'Holis', action: 'view', post: blogPosts.get(req.params.id)});
       } else {
         // show 404 
-        res.render('main_page.ejs', {existingBlogs: blogPosts, overlayText: 'Post not found...'})
+        res.render(MAIN_PAGE, {existingBlogs: blogPosts, alert: ALERT_BOX_DELETION_TEXT, overlayText: 'Post not found...'})
       }
 } )
 

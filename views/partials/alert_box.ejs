@@ -1,15 +1,17 @@
-<div id = 'alertBoxBackground' >
-<div id='alertBox' class="card">
-    <div class="card-header">
-        WARNING
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Deleting post!</h5>
-      <p class="card-text">Deleting a post is permanent. You won't recover it in any way</p>
-      <div class="card-body bg-white">
-        <button class="btn btn-secondary" id="cancelButton">Cancel</button>
-        <button class="btn btn-danger" id="confirmDeleteButton">Delete anyway</button>
+<% if(locals.alert) {%>
+  <div id = 'alertBoxBackground' >
+  <div id='alertBox' class="card">
+      <div class="card-header">
+          <%= alert.header %>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><%= alert.title %></h5>
+        <p class="card-text"><%= alert.description %></p>
+        <div class="card-body bg-white">
+          <button class="btn btn-secondary" id="cancelButton">Cancel</button>
+          <button class="btn <%= alert.confirmStyle%>" id="confirmDeleteButton"><%= alert.confirmationText %></button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% } %>
