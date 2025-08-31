@@ -9,16 +9,16 @@
 <%} else { %>
     <h1>Your posts</h1>
     <div id = 'postGallery'>
-    <% for(post of existingBlogs.entries()){ %>
+    <% for(post of existingBlogs){ %>
 
         <div class="card post" style="width: 18rem; height: 25rem">
-            <img class="card-img-top" src="<%= post[1].imgUrl %>" alt="Card image cap">
+            <img class="card-img-top" src="<%= post.dataValues.imgUrl !== null ? post.dataValues.imgUrl : '/imgs/picturePlaceholder.jpg' %>" alt="Card image cap">
             <div class="card-body">
-            <h5 class="card-title"><%= post[1].title %></h5>
+            <h5 class="card-title"><%= post.dataValues.title %></h5>
             <div class="col">
-                <a href="/view/<%= post[0]%>" class="btn btn-primary"><i class="bi bi-book-fill"></i></a>
-                <a href="/edit/<%= post[0]%>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                <button class='deleteButton btn btn-outline-danger' id="<%=post[0]%>"><i id="<%=post[0]%>" class="bi bi-trash3"></i></button>
+                <a href="/view/<%= post.dataValues.id%>" class="btn btn-primary"><i class="bi bi-book-fill"></i></a>
+                <a href="/edit/<%= post.dataValues.id%>" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                <button class='deleteButton btn btn-outline-danger' id="<%=post.id%>"><i id="<%=post.dataValues.id%>" class="bi bi-trash3"></i></button>
             </div>
             </div>
           </div>
